@@ -21,7 +21,7 @@ public class SlangApp implements ActionListener{
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		
-		addPanel = new AddForm();
+		addPanel = new AddForm(dict);
 		editPanel = new EditForm();
 		tabbedPane = new JTabbedPane();
 		searchSlangPanel = new SearchForm(dict);

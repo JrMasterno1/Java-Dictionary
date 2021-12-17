@@ -1,4 +1,6 @@
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -6,8 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class EditForm extends JPanel {
-	JComboBox<String> chooseBox;
+public class EditForm extends JPanel implements ActionListener {
 	JLabel slangLabel;
 	JLabel definitionLabel;
 	JTextField slangField;
@@ -16,8 +17,6 @@ public class EditForm extends JPanel {
 	public EditForm() {
 		setPreferredSize(new Dimension(480, 500));
 		setLayout(null);
-		chooseBox = new JComboBox<String>();
-		chooseBox.setBounds(150, 50, 100, 30);
 		slangLabel = new JLabel("Slang word");
 		slangLabel.setBounds(80, 150, 100, 30);
 		definitionLabel = new JLabel("Definition");
@@ -33,7 +32,12 @@ public class EditForm extends JPanel {
 		add(definitionLabel);
 		add(definitionField);
 		add(button);
-		add(chooseBox);
 		
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == button) {
+			
+		}
 	}
 }
