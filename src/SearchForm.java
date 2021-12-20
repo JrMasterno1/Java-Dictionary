@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -5,6 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.AbstractListModel;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,67 +23,59 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class SearchForm extends JPanel implements ActionListener {
-	JLabel slangLabel;
-	JTextField slangField;
+	JLabel definitionLabel;
+	JTextField definitionField;
 	JButton searchButton;
 	Dict dict;
 	JList resultList;
 	JScrollPane resultPane;
 	DefaultListModel<String> listModel;
-	JTextField editField;
-	JButton editButton;
 	JButton deleteButton;
 	public SearchForm(Dict d) {
 		dict = d;
-		setPreferredSize(new Dimension(480, 500));
-		setLayout(null);
-		slangLabel = new JLabel("Slang word");
-		slangLabel.setBounds(40, 100, 100, 30);
-		slangField = new JTextField();
-		slangField.setBounds(150, 100, 200, 30);
+		setPreferredSize(new Dimension(410, 500));
+		setLayout(new BorderLayout());
+		
+		JPanel searchPanel = new JPanel();
+		searchPanel.setPreferredSize(new Dimension(300, 100));
+		
+		definitionLabel = new JLabel("Definition word");
+		//definitionLabel.setBounds(10, 100, 80, 30);
+		definitionField = new JTextField();
+		definitionField.setPreferredSize(new Dimension(150, 30));
+		//definitionField.setBounds(90, 100, 150, 30);
 		
 		searchButton = new JButton("Search");
 		searchButton.addActionListener(this);
-		searchButton.setBounds(370, 100, 100, 30);
+		searchPanel.add(definitionLabel);
+		searchPanel.add(definitionField);
+		searchPanel.add(searchButton);
+		//searchButton.setBounds(260, 100, 90, 30);
 		
 		listModel = new DefaultListModel<String>();
 		
 		resultList = new JList(listModel);
-		resultList.addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
-				editField.setText((String) resultList.getSelectedValue());
-			}
-		});
 		resultPane = new JScrollPane(resultList);
-		resultPane.setBounds(55, 160, 150, 200);
-		deleteButton = new JButton("Delete");
-		deleteButton.setBounds(55, 390, 150, 30);
-		deleteButton.addActionListener(this);
+		resultPane.setMaximumSize(new Dimension(200, 100));
 		
-		editField = new JTextField();
-		editField.setBounds(230, 180, 150, 30);
-		editButton = new JButton("Edit");
-		editButton.setBounds(255, 250, 100, 30);
-		editButton.addActionListener(this);
-		
-		
-		
-		add(slangLabel);
-		add(slangField);
-		add(resultPane);
-		add(searchButton);
-		add(deleteButton);
-		add(editField);
-		add(editButton);
+		JPanel blankWest = new JPanel();
+		blankWest.setPreferredSize(new Dimension(200,300));
+		JPanel blankEast = new JPanel();
+		blankEast.setPreferredSize(new Dimension(200,300));
+		JPanel blankSOUTH = new JPanel();
+		blankSOUTH.setPreferredSize(new Dimension(200,300));
+		add(searchPanel, BorderLayout.NORTH);
+		add(resultPane, BorderLayout.CENTER);
+		add(blankSOUTH, BorderLayout.SOUTH);
+		add(blankWest, BorderLayout.WEST);
+		add(blankEast, BorderLayout.EAST);
+		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == searchButton) {
 			listModel.removeAllElements();
-			HashSet<String> defSet = dict.findBySlang(slangField.getText());
+			HashSet<String> defSet = dict.searchSlang(definitionField.getText());
 			if (defSet != null) {				
 				for(String s : defSet) {
 					listModel.addElement(s);
@@ -87,24 +83,6 @@ public class SearchForm extends JPanel implements ActionListener {
 			}
 			else {
 				JOptionPane.showMessageDialog(resultList, "Slang is not in dictionary");
-			}
-		}
-		else if (e.getSource() == editButton) {
-			dict.EditSlang(slangField.getText(), (String) resultList.getSelectedValue(), editField.getText());
-			listModel.addElement(editField.getText());
-			listModel.removeElement(resultList.getSelectedValue());
-			editField.setText("");
-		}
-		else if (e.getSource() == deleteButton) {
-			int choice = JOptionPane.showConfirmDialog(deleteButton, "This slang will remove from dictionary");
-			if(choice == 0) {
-				dict.deleteSlang(slangField.getText());
-				editField.setText("");
-				listModel.removeAllElements();
-				slangField.setText("");
-			}
-			else {
-				System.out.println("No delete");
 			}
 		}
 		

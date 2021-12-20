@@ -2,10 +2,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class Dict {
 	HashMap<String, HashSet<String>> dictionary;
@@ -32,7 +34,7 @@ public class Dict {
 			e.printStackTrace();
 		}
 	}
-	public HashSet<String> findBySlang(String slang){
+	public HashSet<String> searchSlang(String slang){
 		return dictionary.get(slang);
 	}
 	public void AddDefinition(String slang, String definition) {
@@ -42,16 +44,33 @@ public class Dict {
 		if(dictionary.containsKey(slang)) return true;
 		return false;
 	}
-	public void EditSlang(String slang, String old_value, String new_value) {
+	public boolean EditSlang(String slang, String old_value, String new_value) {
 		HashSet<String > hs = dictionary.get(slang);
-		hs.forEach(value -> {
+		boolean edited = false;
+		for (String value: hs) {
 			if (value.equals(old_value)) {
-				hs.remove(value);
-				hs.add(new_value);
+				value = new_value;
+				edited = true;
 			}
-		});
+		}
+		return edited;
 	}
 	public void deleteSlang(String slang) {
 		dictionary.remove(slang);
+	}
+	public ArrayList<String> searchDefinition(String definition) {
+		ArrayList<String> slangs = new ArrayList<String>();
+		for (Entry<String, HashSet<String>> entry : dictionary.entrySet()) {
+			String slang = entry.getKey();
+			HashSet<String> definitions = entry.getValue();
+			for (Iterator iterator = definitions.iterator(); iterator.hasNext();) {
+				String defString = (String) iterator.next();
+				if (definition.equals(defString)) {
+					slangs.add(slang);
+				}
+			}
+			
+		}
+		return slangs;
 	}
 }
