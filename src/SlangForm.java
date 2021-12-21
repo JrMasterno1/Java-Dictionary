@@ -175,7 +175,6 @@ public class SlangForm extends JPanel implements ActionListener {
 		}
 		else if (e.getSource() == searchButton) {
 			listModel.removeAllElements();
-			System.out.println(searchSlangField.getText());
 			HashSet<String> defSet = dict.searchSlang(searchSlangField.getText());
 			if (defSet != null) {				
 				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  

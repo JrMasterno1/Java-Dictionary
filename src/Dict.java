@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Random;
 
 public class Dict {
 	HashMap<String, HashSet<String>> dictionary;
@@ -65,12 +66,26 @@ public class Dict {
 			HashSet<String> definitions = entry.getValue();
 			for (Iterator iterator = definitions.iterator(); iterator.hasNext();) {
 				String defString = (String) iterator.next();
-				if (definition.equals(defString)) {
+				if (definition.equalsIgnoreCase(defString)) {
 					slangs.add(slang);
+					break;
 				}
 			}
 			
 		}
 		return slangs;
+	}
+	public String randomSlang() {
+		Random r = new Random();
+		ArrayList<String> slangs = new ArrayList<String>(dictionary.keySet());
+		return slangs.get(r.nextInt(slangs.size()));
+	}
+	public HashMap<String, HashSet<String>> slangGame() {
+		HashMap<String, HashSet<String>> game = new HashMap<String, HashSet<String>>();
+		while(game.size() != 4) {
+			String slang = randomSlang();
+			game.put(slang, dictionary.get(slang));	
+		}
+		return game;
 	}
 }

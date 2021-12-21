@@ -23,6 +23,8 @@ public class SlangApp implements ActionListener{
 		tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Slang Form", slangPanel);
 		tabbedPane.addTab("Search definition", searchForm);
+		tabbedPane.addTab("Game Form", new GameForm(dict));
+		tabbedPane.addTab("On this day", new RandomForm(dict));
 		
 		frame.add(tabbedPane, BorderLayout.CENTER);
 		frame.setVisible(true);

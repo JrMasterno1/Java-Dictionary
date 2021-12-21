@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -75,9 +76,9 @@ public class SearchForm extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == searchButton) {
 			listModel.removeAllElements();
-			HashSet<String> defSet = dict.searchSlang(definitionField.getText());
-			if (defSet != null) {				
-				for(String s : defSet) {
+			ArrayList<String> slangList = dict.searchDefinition(definitionField.getText());
+			if (slangList.size() != 0) {				
+				for(String s : slangList) {
 					listModel.addElement(s);
 				}
 			}
