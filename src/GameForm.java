@@ -56,6 +56,7 @@ public class GameForm extends JPanel implements ActionListener {
 		slangGame = new JButton("Create new slang game");
 		slangGame.addActionListener(this);
 		definitionGame = new JButton("Create new definition game");
+		definitionGame.addActionListener(this);
 		createPanel = new JPanel();
 		createPanel.setLayout(new BoxLayout(createPanel, BoxLayout.X_AXIS));
 		//createPanel.setPreferredSize(new Dimension(300, 100));
@@ -99,10 +100,12 @@ public class GameForm extends JPanel implements ActionListener {
 		
 	}
 	String key = "";
+	boolean isSlang = false;
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == slangGame) {
+			isSlang = false;
 			
 			messageLabel.setText("");
 			Random r = new Random();
@@ -129,10 +132,46 @@ public class GameForm extends JPanel implements ActionListener {
 				count++;
 			}
 		}
-		if(A.isSelected()) {
-			
+		else if (e.getSource() == definitionGame) {
+			isSlang = false;
+			HashMap<String, ArrayList<String>> myGame = dict.definitionGame();
 			messageLabel.setText("");
-			if (A.getText() == dict.searchSlang(key).iterator().next()) {
+			Random r = new Random();
+			ArrayList<String> definitions = new ArrayList<String>(myGame.keySet());
+			key = definitions.get(r.nextInt(definitions.size()));
+			word.setText("Definition: " + key);
+			int count = 1;
+			for (Map.Entry<String, ArrayList<String>> entry : myGame.entrySet()) {
+				ArrayList<String> value = entry.getValue();
+				if (count == 1) {					
+					A.setText(value.iterator().next());
+				}
+				else if (count == 2) {
+					B.setText(value.iterator().next());
+				}
+				else if (count == 3) {
+					C.setText(value.iterator().next());
+				}
+				else {
+					D.setText(value.iterator().next());
+				}
+				count++;
+			}
+		}
+		if(A.isSelected()) {
+			messageLabel.setText("");
+			boolean isCorrect = false;
+			if (isSlang) {				
+				if (A.getText() == dict.searchSlang(key).iterator().next()) {
+					isCorrect = true;
+				}
+			}
+			else {
+				if (A.getText() == dict.searchDefinition(key).iterator().next()) {
+					isCorrect = true;
+				}
+			}
+			if (isCorrect) {
 				messageLabel.setText("correct");
 				messageLabel.setForeground(Color.GREEN);
 			}
@@ -143,7 +182,18 @@ public class GameForm extends JPanel implements ActionListener {
 		}
 		if(B.isSelected()) {
 			messageLabel.setText("");
-			if (B.getText() == dict.searchSlang(key).iterator().next()) {
+			boolean isCorrect = false;
+			if (isSlang) {				
+				if (B.getText() == dict.searchSlang(key).iterator().next()) {
+					isCorrect = true;
+				}
+			}
+			else {
+				if (B.getText() == dict.searchDefinition(key).iterator().next()) {
+					isCorrect = true;
+				}
+			}
+			if (isCorrect) {
 				messageLabel.setText("correct");
 				messageLabel.setForeground(Color.GREEN);
 			}
@@ -154,7 +204,18 @@ public class GameForm extends JPanel implements ActionListener {
 		}
 		if(C.isSelected()) {
 			messageLabel.setText("");
-			if (C.getText() == dict.searchSlang(key).iterator().next()) {
+			boolean isCorrect = false;
+			if (isSlang) {				
+				if (C.getText() == dict.searchSlang(key).iterator().next()) {
+					isCorrect = true;
+				}
+			}
+			else {
+				if (C.getText() == dict.searchDefinition(key).iterator().next()) {
+					isCorrect = true;
+				}
+			}
+			if (isCorrect) {
 				messageLabel.setText("correct");
 				messageLabel.setForeground(Color.GREEN);
 			}
@@ -165,7 +226,18 @@ public class GameForm extends JPanel implements ActionListener {
 		}
 		if(D.isSelected()) {
 			messageLabel.setText("");
-			if (D.getText() == dict.searchSlang(key).iterator().next()) {
+			boolean isCorrect = false;
+			if (isSlang) {				
+				if (D.getText() == dict.searchSlang(key).iterator().next()) {
+					isCorrect = true;
+				}
+			}
+			else {
+				if (D.getText() == dict.searchDefinition(key).iterator().next()) {
+					isCorrect = true;
+				}
+			}
+			if (isCorrect) {
 				messageLabel.setText("correct");
 				messageLabel.setForeground(Color.GREEN);
 			}

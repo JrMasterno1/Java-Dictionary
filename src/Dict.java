@@ -88,4 +88,12 @@ public class Dict {
 		}
 		return game;
 	}
+	public HashMap<String, ArrayList<String>> definitionGame() {
+		HashMap<String, ArrayList<String>> game = new HashMap<String, ArrayList<String>>();
+		while(game.size() != 4) {
+			String definition = dictionary.get(randomSlang()).iterator().next();
+			game.put(definition, searchDefinition(definition));
+		}
+		return game;
+	}
 }
