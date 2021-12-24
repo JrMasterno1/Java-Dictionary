@@ -33,7 +33,7 @@ public class SlangForm extends JPanel implements ActionListener {
 	JButton addButton;
 	Dict dict;
 	JButton editButton;
-	JButton resetButton;
+	JButton clearButton;
 	JPanel addForm;
 	JPanel searchForm;
 	JButton searchButton;
@@ -70,16 +70,16 @@ public class SlangForm extends JPanel implements ActionListener {
 		editButton.setBounds(160, 250, 80, 30);
 		editButton.addActionListener(this);
 		
-		resetButton = new JButton("Reset");
-		resetButton.setBounds(260, 250, 80, 30);
-		resetButton.addActionListener(this);
+		clearButton = new JButton("Clear");
+		clearButton.setBounds(260, 250, 80, 30);
+		clearButton.addActionListener(this);
 		addForm.add(slangLabel);
 		addForm.add(slangField);
 		addForm.add(definitionLabel);
 		addForm.add(definitionField);
 		addForm.add(addButton);
 		addForm.add(editButton);
-		addForm.add(resetButton);
+		addForm.add(clearButton);
 		addForm.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(addForm, BorderLayout.CENTER);
 		
@@ -142,6 +142,9 @@ public class SlangForm extends JPanel implements ActionListener {
 		}
 		add(historyPanel, BorderLayout.SOUTH);
 	}
+	public void clearHistory() {
+		historyArea.setText("");
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addButton) {
@@ -173,7 +176,7 @@ public class SlangForm extends JPanel implements ActionListener {
 			}
 		}
 		else if (e.getSource() == deleteButton) {
-			int choice = JOptionPane.showConfirmDialog(deleteButton, "This slang will remove from dictionary");
+			int choice = JOptionPane.showConfirmDialog(deleteButton, "This slang will remove from dictionary", "Delete", JOptionPane.YES_NO_OPTION);
 			if(choice == 0) {
 				dict.deleteSlang(searchSlangField.getText());
 				listModel.removeAllElements();
@@ -195,14 +198,14 @@ public class SlangForm extends JPanel implements ActionListener {
 				dict.AddHistory(history);
 				historyArea.append("\n" + history);
 				for(String s : defSet) {
-					listModel.addElement(s);
+					listModel.addElement(s.strip());
 				}
 			}
 			else {
 				JOptionPane.showMessageDialog(resultList, "Slang is not in dictionary");
 			}
 		}
-		else if (e.getSource() == resetButton) {
+		else if (e.getSource() == clearButton) {
 			slangField.setText("");
 			definitionField.setText("");
 		}
