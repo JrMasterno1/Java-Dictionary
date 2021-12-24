@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -132,6 +134,12 @@ public class SlangForm extends JPanel implements ActionListener {
 		historyPane.setPreferredSize(new Dimension(500, 100));
 		historyPanel.add(historyLabel);
 		historyPanel.add(historyPane);
+		LinkedList<String> history = dict.getHistory();
+		for (Iterator iterator = history.iterator(); iterator.hasNext();) {
+			String string = (String) iterator.next();
+			historyArea.append("\n" + string);
+			
+		}
 		add(historyPanel, BorderLayout.SOUTH);
 	}
 	@Override
@@ -139,7 +147,7 @@ public class SlangForm extends JPanel implements ActionListener {
 		if (e.getSource() == addButton) {
 			String slang = slangField.getText();
 			String definition = definitionField.getText();
-			if(dict.hashSlang(slang)) {
+			if(dict.hasSlang(slang)) {
 				String[] options = {"Add new definition", "Overwrite"};
 				JOptionPane pane = new JOptionPane();
 				int choice = pane.showOptionDialog(null, "This slang has already existed", "Existed slang", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
@@ -150,6 +158,9 @@ public class SlangForm extends JPanel implements ActionListener {
 					System.out.println("else");
 				}
 				
+			}
+			else {
+				dict.AddNew(slang, definition);
 			}
 		}
 		else if (e.getSource() == editButton) {
@@ -180,7 +191,9 @@ public class SlangForm extends JPanel implements ActionListener {
 				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
 				Date date = new Date();  
 				String time = formatter.format(date).toString();
-				historyArea.append("\n" + time + " |   " + searchSlangField.getText());
+				String history = time + " |   " + searchSlangField.getText();
+				dict.AddHistory(history);
+				historyArea.append("\n" + history);
 				for(String s : defSet) {
 					listModel.addElement(s);
 				}

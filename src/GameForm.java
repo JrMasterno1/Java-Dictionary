@@ -105,7 +105,8 @@ public class GameForm extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == slangGame) {
-			isSlang = false;
+			answerGroup.clearSelection();
+			isSlang = true;
 			
 			messageLabel.setText("");
 			Random r = new Random();
@@ -133,6 +134,7 @@ public class GameForm extends JPanel implements ActionListener {
 			}
 		}
 		else if (e.getSource() == definitionGame) {
+			answerGroup.clearSelection();
 			isSlang = false;
 			HashMap<String, ArrayList<String>> myGame = dict.definitionGame();
 			messageLabel.setText("");
