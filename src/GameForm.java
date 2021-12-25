@@ -88,7 +88,7 @@ public class GameForm extends JPanel implements ActionListener {
 		word = new JLabel("", JLabel.CENTER);
 		word.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
 		messageLabel = new JLabel("", JLabel.CENTER);
-		messageLabel.setFont(new Font("Helvetica Neue", Font.ITALIC, 15));
+		messageLabel.setFont(new Font("Helvetica Neue", Font.ITALIC, 20));
 		
 		add(createPanel, c);
 		c.gridy = 1;
@@ -175,7 +175,7 @@ public class GameForm extends JPanel implements ActionListener {
 			}
 			if (isCorrect) {
 				messageLabel.setText("correct");
-				messageLabel.setForeground(Color.GREEN);
+				messageLabel.setForeground(new Color(0,102,0));
 			}
 			else {
 				messageLabel.setForeground(Color.RED);
@@ -196,8 +196,8 @@ public class GameForm extends JPanel implements ActionListener {
 				}
 			}
 			if (isCorrect) {
-				messageLabel.setText("correct");
-				messageLabel.setForeground(Color.GREEN);
+				messageLabel.setText("Correct");
+				messageLabel.setForeground(new Color(0,102,0));
 			}
 			else {
 				messageLabel.setForeground(Color.RED);
@@ -219,7 +219,7 @@ public class GameForm extends JPanel implements ActionListener {
 			}
 			if (isCorrect) {
 				messageLabel.setText("correct");
-				messageLabel.setForeground(Color.GREEN);
+				messageLabel.setForeground(new Color(0,102,0));
 			}
 			else {
 				messageLabel.setForeground(Color.RED);
@@ -241,7 +241,7 @@ public class GameForm extends JPanel implements ActionListener {
 			}
 			if (isCorrect) {
 				messageLabel.setText("correct");
-				messageLabel.setForeground(Color.GREEN);
+				messageLabel.setForeground(new Color(0,102,0));
 			}
 			else {
 				messageLabel.setForeground(Color.RED);

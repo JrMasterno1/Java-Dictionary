@@ -161,7 +161,7 @@ public class Dict {
 			HashSet<String> definitions = entry.getValue();
 			for (Iterator iterator = definitions.iterator(); iterator.hasNext();) {
 				String defString = (String) iterator.next();
-				if (definition.equalsIgnoreCase(defString)) {
+				if (defString.contains(definition)) {
 					slangs.add(slang);
 					break;
 				}
