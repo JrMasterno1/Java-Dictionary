@@ -35,7 +35,6 @@ public class Dict {
 		}
 		loadMap(modifiedList, "modified.txt");
 		for (Map.Entry<String, HashSet<String>> entry : modifiedList.entrySet()) {
-			System.out.println("modified");
 			String key = entry.getKey();
 			HashSet<String> val = entry.getValue();
 			dictionary.put(key, val);
@@ -136,10 +135,9 @@ public class Dict {
 	}
 	public boolean EditSlang(String slang, String old_value, String new_value) {
 		HashSet<String > hs = dictionary.get(slang);
-		System.out.println(hs.toString());
 		boolean edited = false;
 		for (String value: hs) {
-			if (value.equals(old_value)) {
+			if (value.strip().equals(old_value)) {
 				hs.remove(old_value);
 				hs.add(new_value);
 				edited = true;

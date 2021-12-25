@@ -156,14 +156,18 @@ public class SlangForm extends JPanel implements ActionListener {
 				int choice = pane.showOptionDialog(null, "This slang has already existed", "Existed slang", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 				if(choice == 0) {
 					dict.AddDefinition(slang, definition);
+					listModel.addElement(definition);
 				}
 				else {
-					System.out.println("else");
+					dict.AddNew(slang, definition);
+					listModel.removeAllElements();
+					listModel.addElement(definition);
 				}
 				
 			}
 			else {
 				dict.AddNew(slang, definition);
+				JOptionPane.showMessageDialog(null, "Added successfully");
 			}
 		}
 		else if (e.getSource() == editButton) {
@@ -183,20 +187,15 @@ public class SlangForm extends JPanel implements ActionListener {
 				slangField.setText("");
 				searchSlangField.setText("");
 			}
-			else {
-				System.out.println("No delete");
-			}
 		}
 		else if (e.getSource() == searchButton) {
 			listModel.removeAllElements();
 			HashSet<String> defSet = dict.searchSlang(searchSlangField.getText());
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+			Date date = new Date();  
+			String time = formatter.format(date).toString();
+			String history = time + " |   " + searchSlangField.getText();
 			if (defSet != null) {				
-				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-				Date date = new Date();  
-				String time = formatter.format(date).toString();
-				String history = time + " |   " + searchSlangField.getText();
-				dict.AddHistory(history);
-				historyArea.append("\n" + history);
 				for(String s : defSet) {
 					listModel.addElement(s.strip());
 				}
@@ -204,6 +203,8 @@ public class SlangForm extends JPanel implements ActionListener {
 			else {
 				JOptionPane.showMessageDialog(resultList, "Slang is not in dictionary");
 			}
+			dict.AddHistory(history);
+			historyArea.append("\n" + history);
 		}
 		else if (e.getSource() == clearButton) {
 			slangField.setText("");
