@@ -193,6 +193,14 @@ public class Dict {
 	}
 	public void reset() {
 		loadMap(dictionary, "slang.txt");
+		for (Map.Entry<String, HashSet<String>>entry : modifiedList.entrySet()) {
+			String key = entry.getKey();
+			HashSet<String> val = entry.getValue();
+			if (dictionary.containsKey(key) == false) {
+				dictionary.remove(key);
+			}
+			
+		}
 		historyList.clear();
 		deleteList.clear();
 		modifiedList.clear();

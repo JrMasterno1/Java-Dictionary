@@ -44,6 +44,7 @@ public class GameForm extends JPanel implements ActionListener {
 	JRadioButton D;
 	JLabel messageLabel;
 	ButtonGroup answerGroup;
+	JLabel solution;
 	public GameForm(Dict d) {
 		dict = d;
 		setPreferredSize(new Dimension(410, 500));
@@ -89,6 +90,8 @@ public class GameForm extends JPanel implements ActionListener {
 		word.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
 		messageLabel = new JLabel("", JLabel.CENTER);
 		messageLabel.setFont(new Font("Helvetica Neue", Font.ITALIC, 20));
+		solution = new JLabel("",JLabel.CENTER);
+		solution.setFont(new Font("Helvetica Neue", Font.BOLD, 25));
 		
 		add(createPanel, c);
 		c.gridy = 1;
@@ -97,6 +100,8 @@ public class GameForm extends JPanel implements ActionListener {
 		add(answerPanel, c);
 		c.gridy = 3;
 		add(messageLabel, c);
+		c.gridy = 4;
+		add(solution, c);
 		
 	}
 	String key = "";
@@ -104,8 +109,13 @@ public class GameForm extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		A.setEnabled(true);
+		B.setEnabled(true);
+		C.setEnabled(true);
+		D.setEnabled(true);
+		solution.setText("");
 		if (e.getSource() == slangGame) {
-			answerGroup.clearSelection();
+			answerGroup.clearSelection();			
 			isSlang = true;
 			
 			messageLabel.setText("");
@@ -161,37 +171,21 @@ public class GameForm extends JPanel implements ActionListener {
 			}
 		}
 		if(A.isSelected()) {
+			B.setEnabled(false);
+			C.setEnabled(false);
+			D.setEnabled(false);
 			messageLabel.setText("");
 			boolean isCorrect = false;
-			if (isSlang) {				
-				if (A.getText() == dict.searchSlang(key).iterator().next()) {
+			String sol = "";
+			if (isSlang) {			
+				sol = dict.searchSlang(key).iterator().next();			
+				if (A.getText() == sol) {
 					isCorrect = true;
 				}
 			}
 			else {
-				if (A.getText() == dict.searchDefinition(key).iterator().next()) {
-					isCorrect = true;
-				}
-			}
-			if (isCorrect) {
-				messageLabel.setText("correct");
-				messageLabel.setForeground(new Color(0,102,0));
-			}
-			else {
-				messageLabel.setForeground(Color.RED);
-				messageLabel.setText("Incorrect");
-			}
-		}
-		if(B.isSelected()) {
-			messageLabel.setText("");
-			boolean isCorrect = false;
-			if (isSlang) {				
-				if (B.getText() == dict.searchSlang(key).iterator().next()) {
-					isCorrect = true;
-				}
-			}
-			else {
-				if (B.getText() == dict.searchDefinition(key).iterator().next()) {
+				sol = dict.searchDefinition(key).iterator().next();
+				if (A.getText() == sol) {
 					isCorrect = true;
 				}
 			}
@@ -202,50 +196,98 @@ public class GameForm extends JPanel implements ActionListener {
 			else {
 				messageLabel.setForeground(Color.RED);
 				messageLabel.setText("Incorrect");
+				solution.setText("Answer: " + sol);
+				solution.setForeground(new Color(0,102,0));
+			}
+		}
+		if(B.isSelected()) {
+			A.setEnabled(false);
+			C.setEnabled(false);
+			D.setEnabled(false);
+			messageLabel.setText("");
+			boolean isCorrect = false;
+			String sol = "";
+			if (isSlang) {			
+				sol = dict.searchSlang(key).iterator().next();
+				if (B.getText() == sol) {
+					isCorrect = true;
+				}
+			}
+			else {
+				sol = dict.searchDefinition(key).iterator().next();
+				if (B.getText() == sol) {
+					isCorrect = true;
+				}
+			}
+			if (isCorrect) {
+				messageLabel.setText("Correct");
+				messageLabel.setForeground(new Color(0,102,0));
+			}
+			else {
+				messageLabel.setForeground(Color.RED);
+				messageLabel.setText("Incorrect");
+				solution.setText("Answer: " + sol);
+				solution.setForeground(new Color(0,102,0));
 			}
 		}
 		if(C.isSelected()) {
+			A.setEnabled(false);
+			B.setEnabled(false);
+			D.setEnabled(false);
 			messageLabel.setText("");
 			boolean isCorrect = false;
-			if (isSlang) {				
-				if (C.getText() == dict.searchSlang(key).iterator().next()) {
+			String sol = "";
+			if (isSlang) {			
+				sol = dict.searchSlang(key).iterator().next();			
+				if (C.getText() == sol) {
 					isCorrect = true;
 				}
 			}
 			else {
-				if (C.getText() == dict.searchDefinition(key).iterator().next()) {
+				sol = dict.searchDefinition(key).iterator().next();
+				if (C.getText() == sol) {
 					isCorrect = true;
 				}
 			}
 			if (isCorrect) {
-				messageLabel.setText("correct");
+				messageLabel.setText("Correct");
 				messageLabel.setForeground(new Color(0,102,0));
 			}
 			else {
 				messageLabel.setForeground(Color.RED);
 				messageLabel.setText("Incorrect");
+				solution.setText("Answer: " + sol);
+				solution.setForeground(new Color(0,102,0));
 			}
 		}
 		if(D.isSelected()) {
+			A.setEnabled(false);
+			B.setEnabled(false);
+			C.setEnabled(false);
 			messageLabel.setText("");
 			boolean isCorrect = false;
-			if (isSlang) {				
-				if (D.getText() == dict.searchSlang(key).iterator().next()) {
+			String sol = "";
+			if (isSlang) {			
+				sol = dict.searchSlang(key).iterator().next();			
+				if (D.getText() == sol) {
 					isCorrect = true;
 				}
 			}
 			else {
-				if (D.getText() == dict.searchDefinition(key).iterator().next()) {
+				sol = dict.searchDefinition(key).iterator().next();
+				if (D.getText() == sol) {
 					isCorrect = true;
 				}
 			}
 			if (isCorrect) {
-				messageLabel.setText("correct");
+				messageLabel.setText("Correct");
 				messageLabel.setForeground(new Color(0,102,0));
 			}
 			else {
 				messageLabel.setForeground(Color.RED);
 				messageLabel.setText("Incorrect");
+				solution.setText("Answer: " + sol);
+				solution.setForeground(new Color(0,102,0));
 			}
 		}
 	}

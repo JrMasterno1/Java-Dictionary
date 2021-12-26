@@ -151,17 +151,21 @@ public class SlangForm extends JPanel implements ActionListener {
 			String slang = slangField.getText();
 			String definition = definitionField.getText();
 			if(dict.hasSlang(slang)) {
-				String[] options = {"Add new definition", "Overwrite"};
+				String[] options = {"Duplicate", "Overwrite"};
 				JOptionPane pane = new JOptionPane();
 				int choice = pane.showOptionDialog(null, "This slang has already existed", "Existed slang", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 				if(choice == 0) {
 					dict.AddDefinition(slang, definition);
-					listModel.addElement(definition);
+					if(slang.equals(searchSlangField.getText())) {						
+						listModel.addElement(definition);
+					}
 				}
 				else {
 					dict.AddNew(slang, definition);
-					listModel.removeAllElements();
-					listModel.addElement(definition);
+					if(slang.equals(searchSlangField.getText())) {
+						listModel.removeAllElements();
+						listModel.addElement(definition);
+					}
 				}
 				
 			}

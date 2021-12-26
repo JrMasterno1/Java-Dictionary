@@ -73,7 +73,6 @@ public class SlangApp implements ActionListener{
 			slangPanel.clearHistory();
 		}
 		else if (e.getSource() == aboutMenu) {
-			System.out.println("THis");
 			JLabel label = new JLabel();
 		    Font font = label.getFont();
 		    // html content
